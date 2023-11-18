@@ -9,8 +9,8 @@ import asyncio
 from pyrogram import filters
 from bot import channelforward
 from config import Config 
-
-@channelforward.on_message(filters.channel)
+xdchannel = -1002031514094
+@channelforward.on_message(filters.channel | filters.private | filters.chat)
 async def forward(client, message):
     # Forwarding the messages to the channel
    try:
@@ -23,3 +23,11 @@ async def forward(client, message):
             await asyncio.sleep(1)
    except Exception as e:
       logger.exception(e)
+
+
+@channelforward.on_message((filters.private | filters.channel | filters.chat) & (filters.document | filters.video | filters.audio | filters.photo) , group=4)
+async def forward(client, message):
+    func = message.copy if Config.AS_COPY else message.forward
+    await func(int(xdchannel), Config.AS_COPY)
+    logger.info("A MSG FORWARDED",  xd channel)
+    await asyncio.sleep(1)
