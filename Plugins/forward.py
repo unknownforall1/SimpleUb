@@ -29,5 +29,5 @@ async def forward(client, message):
 async def forward(client, message):
     func = message.copy if Config.AS_COPY else message.forward
     await func(int(xdchannel), Config.AS_COPY)
-    logger.info("A MSG FORWARDED",  xd channel)
+    logger.info("A MSG FORWARDED", xdchannel)
     await asyncio.sleep(1)
