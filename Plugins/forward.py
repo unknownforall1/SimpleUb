@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 import asyncio
 from pyrogram import filters
 from bot import channelforward
-from pyrogram.errors import FloodWAit
+from pyrogram.errors import FloodWait
 from config import Config 
 
 @channelforward.on_message(filters.channel)
