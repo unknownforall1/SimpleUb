@@ -14,7 +14,7 @@ from translation import Translation
 ################################################################################################################################################################################################################################################
 # start command
 
-@channelforward.on_message(filters.command("start") & filters.private & filters.incoming)
+@channelforward.on_message(filters.command("check") & filters.private & filters.incoming)
 async def start(client, message):
     await message.reply(
         text=Translation.START,
@@ -25,7 +25,7 @@ async def start(client, message):
 ################################################################################################################################################################################################################################################
 # about command
 
-@channelforward.on_message(filters.command("about") & filters.private & filters.incoming)
+@channelforward.on_message(filters.command("kiskahai") & filters.private & filters.incoming)
 async def about(client, message):
     await message.reply(
         text=Translation.ABOUT,
