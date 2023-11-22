@@ -19,7 +19,7 @@ async def forward(client, message):
          from_channel, to_channel = id.split(":")
          if int(to_channel) == int(to_channel):
             func = message.forward
-            await func(int(to_channel), by[@movies_x_store])
+            await func(int(to_channel))
             await asyncio.sleep(5)
             logger.info("Forwarded a message from", from_channel, "to", to_channel)
             await asyncio.sleep(7)
