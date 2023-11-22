@@ -29,5 +29,3 @@ async def forward(client, message):
        time.sleep(e.x)
    except Exception as e:
        logger.exception(e)
-       continue
-       
