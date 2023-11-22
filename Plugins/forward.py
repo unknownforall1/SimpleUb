@@ -21,9 +21,11 @@ async def forward(client, message):
             func = message.copy
             await asyncio.sleep(1)
             await func(int(to_channel))
-            await client.sleep(10)
             await asyncio.sleep(25)
             logger.info("Forwarded a message from", from_channel, "to", to_channel)
             await asyncio.sleep(7)
-   except Exception as e:
-      logger.exception(e)
+   except FloodWait as Err:
+                print("Flood wait: {} seconds".format(Err.value))
+                sleep(Err.value)
+                continue
+      logger.exception(Err)
