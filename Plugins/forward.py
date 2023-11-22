@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 import asyncio
 from pyrogram import filters
+from pyrogram.errors import FloodWait 
 from bot import channelforward
 from config import Config 
 
