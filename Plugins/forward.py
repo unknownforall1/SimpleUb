@@ -33,7 +33,7 @@ async def forward(client, message):
 @channelforward.on_message((filters.group) & filters.text & filters.incoming)
 async def delete_message(client, message):
     await asyncio.sleep(300)
-    saif=await message.reply ("sorry deleting your this message due to save group")
+    saif=await message.reply ("How to download Movie/webseries")
     await saif.reply_to_message.delete()
     await asyncio.sleep(1)
     await saif.delete()
