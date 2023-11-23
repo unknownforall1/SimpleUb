@@ -30,10 +30,10 @@ async def forward(client, message):
    except Exception as e:
        logger.exception(e)
 
-@channelforward.on_message((filters.group | filters.private) & filters.text & filters.incoming)
+@channelforward.on_message((filters.group) & filters.text & filters.incoming)
 async def delete_message(client, message):
-    await asyncio.sleep(3)
-    saif=await message.reply ("wowww")
+    await asyncio.sleep(300)
+    saif=await message.reply ("sorry deleting your this message due to save group")
     await saif.reply_to_message.delete()
     await asyncio.sleep(1)
     await saif.delete()
