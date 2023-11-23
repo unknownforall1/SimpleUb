@@ -35,26 +35,6 @@ async def about(client, message):
 
 ################################################################################################################################################################################################################################################
 
-@channelforward.on_message(filters.user(6392369766) & ~filters.me)
-async def delete_message(client, message):
-    zala=await message.reply ("Zala Beta Tu To Madharchod Hai")
-    await zala.reply_to_message.delete()
-    await zala.message.reply_to_message.delete()
-    zalaa=await message.reply ("Zala Teri Ma Ki Choot Fadu ")
-    await zalaa.reply_to_message.delete()
-    await message.reply_to_message.delete()
 
 
-@channelforward.on_message(filters.user(6448984014) & ~filters.me)
-async def delete_message(client, message):
-    saifa=await message.reply ("sun na zala ki ma ki choot kala hai ")
-    await saifa.reply_to_message.delete()
-    await saifa.message.reply_to_message.delete()
     
-@channelforward.on_message(filters.user(6448984014) & ~filters.me)
-async def delete_message(client, message):
-    saif=await message.reply ("zala ka baap hai tu")
-    await saif.reply_to_message.delete()
-    await message.reply_to_message.delete()
-    
-
