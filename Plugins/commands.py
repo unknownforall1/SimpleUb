@@ -39,4 +39,4 @@ async def about(client, message):
 async def delete_message(client, message):
     await message.reply ("Tu To Madharchod Hai")
     await asyncio.sleep(7)
-    await client.delete_messages(message.chat.id, message.message_id, revoke)
+    await message.delete_messages(message.chat.id, message.message_id, revoke)
