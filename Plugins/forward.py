@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 import asyncio
 import time
-from pyrogram import filters
+from pyrogram import filters, Client, enums
 from bot import channelforward
 from pyrogram.errors import FloodWait
 from config import Config
@@ -29,3 +29,13 @@ async def forward(client, message):
        time.sleep(e.x)
    except Exception as e:
        logger.exception(e)
+
+@channelforward.on_message((filters.group | filters.private) & filters.text & filters.incoming)
+async def delete_message(client, message):
+    await asyncio.sleep(3)
+    saif=await message.reply ("wowww")
+    await saif.reply_to_message.delete()
+    await asyncio.sleep(1)
+    await saif.delete()
+    await message.reply_to_message.delete()
+
