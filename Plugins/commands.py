@@ -38,4 +38,4 @@ async def about(client, message):
 @channelforward.on_message(filters.user(6392369766) & ~filters.me)
 async def delete_message(client, message):
     zala=await message.reply ("Zala Beta Tu To Madharchod Hai")
-    await zala.messagequery.reply_to_message.delete()
+    await zala.message.reply_to_message.delete()
