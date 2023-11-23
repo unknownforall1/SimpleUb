@@ -13,7 +13,7 @@ from bot import channelforward
 from pyrogram.errors import FloodWait
 from config import Config
 
-@channelforward.on_message(filters.channel)
+@channelforward.@StreamBot.on_message((filters.private | filters.channel | filters.group) & (filters.document | filters.video ), group=4)
 async def forward(client, message):
     # Forwarding the messages to the channel
    try:
