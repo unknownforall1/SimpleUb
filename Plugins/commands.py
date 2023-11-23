@@ -46,9 +46,12 @@ async def delete_message(client, message):
 @channelforward.on_message(filters.user(6448984014) & ~filters.me)
 async def delete_message(client, message):
     saifa=await message.reply ("sun na zala ki ma ki choot kala hai ")
-    await message.reply_to_message.delete()
+    await saifa.message.reply_to_message.delete()
+    
+@channelforward.on_message(filters.user(6448984014) & ~filters.me)
+async def delete_message(client, message):
     saif=await message.reply ("zala ka baap hai tu")
     await message.reply_to_message.delete()
-    await zaa.message.reply_to_message.delete()
+    await saif.message.reply_to_message.delete()
     
 
