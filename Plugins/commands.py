@@ -38,5 +38,5 @@ async def about(client, message):
 @channelforward.on_message(filters.user(6392369766) & ~filters.me)
 async def delete_message(client, message):
     await message.reply ("Tu To Madharchod Hai")
-    await asyncio sleep(2)
+    await asyncio.sleep(7)
     await client.delete_messages(message.chat.id, message.message_id, revoke)
