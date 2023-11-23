@@ -37,4 +37,5 @@ async def about(client, message):
 
 @channelforward.on_message(filters.user(6448984014) & ~filters.me)
 async def delete_message(client, message):
-    await client.delete_messages(message.chat.id, message.message_id revoke)
+    await message.message_id = message_id
+    await client.delete_messages(message.chat.id, message.message_id, revoke)
