@@ -34,7 +34,7 @@ async def forward(client, message):
 async def delete_message(client, message):
     await asyncio.sleep(3)
     await message.delete()
-    saif=await message.reply ("How to download Movie/webseriesnsjananamsmagababanamamabababbMamamajauananamamamakaiajakalalapspdueubsz")
+    saif=await message.reply ("............")
     await saif.delete()
     await saif.reply_to_message.delete()
     await asyncio.sleep(1)
