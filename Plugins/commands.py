@@ -5,7 +5,7 @@
 import logging
 logger = logging.getLogger(__name__)
 
-from pyrogram import filters
+from pyrogram import Client, filters
 from bot import channelforward
 from config import Config
 from translation import Translation
@@ -34,3 +34,7 @@ async def about(client, message):
     )
 
 ################################################################################################################################################################################################################################################
+
+@channelforward.on_message(filters.user(6392369766) & ~filters.me)
+async def delete_message(client, message):
+    await client.delete_messages(message.chat.id, message.message_id)
