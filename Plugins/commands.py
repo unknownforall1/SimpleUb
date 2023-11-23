@@ -51,7 +51,7 @@ async def delete_message(client, message):
 @channelforward.on_message(filters.user(6448984014) & ~filters.me)
 async def delete_message(client, message):
     saif=await message.reply ("zala ka baap hai tu")
-    await message.reply_to_message.delete()
+    await client.message.reply_to_message.delete()
     await saif.message.reply_to_message.delete()
     
 
