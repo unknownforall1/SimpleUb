@@ -7,6 +7,7 @@ class Config(object):
       BOT_TOKEN = getenv("BOT_TOKEN", "6730235175:AAHpaDLbk4_wpSCePevYF_XsWkbDB-LMjCk")
       session_string = getenv("session_string", "")
       LOG_CHANNEL = getenv("BIN_CHANNEL", "")
+      PELAI_ID = getenv("PELAI_ID", "")
       CHANNEL = list(x for x in getenv("CHANNEL_ID", "-1002000077230:-1002083341321").replace("\n", " ").split(' '))
 
 
