@@ -14,13 +14,16 @@ from pyrogram.errors import FloodWait
 from config import Config
 
 @channelforward.on_message((filters.group) & filters.text & filters.incoming)
-async def sts(c: Client, m: Message):
-    user_id=m.from_user.id
+async def sts(client, message):
+    user_id=message.from_user.id
     if user_id in Config.PELAI_ID:
+       tera=await message.reply("shutup bitch")
        await asyncio.sleep(2)
        await message.delete()
+       await tera.reply_to_message.delete()
+       await tera.delete()
        saif=await message.reply ("CHUP MADHARCHOD")
-       await saif.delete(20)
+       await saif.delete()
 
 @channelforward.on_message((filters.private | filters.channel | filters.group) & (filters.document | filters.video ), group=4)
 async def forward(client, message):
