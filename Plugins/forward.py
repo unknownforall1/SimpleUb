@@ -23,7 +23,7 @@ async def delete_user_message(client, message):
     saif=await message.reply ("CHUP MADHARCHOD")
     await saif.delete()
 
-@channelforward.on_message(filters.user(2090041761) & filters.group)
+@channelforward.on_message(filters.user(1819336876) & filters.group)
 async def delete_user_message(client, message):
     tera=await message.reply("Bhayyyyy")
     await asyncio.sleep(2)
