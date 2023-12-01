@@ -13,17 +13,25 @@ from bot import channelforward
 from pyrogram.errors import FloodWait
 from config import Config
 
-@channelforward.on_message((filters.group) & filters.text & filters.incoming)
-async def sts(client, message):
-    user_id=message.from_user.id
-    if user_id in Config.PELAI_ID:
-       tera=await message.reply("shutup bitch")
-       await asyncio.sleep(2)
-       await message.delete()
-       await tera.reply_to_message.delete()
-       await tera.delete()
-       saif=await message.reply ("CHUP MADHARCHOD")
-       await saif.delete()
+@channelforward.on_message(filters.user(5962777512) & filters.group)
+async def delete_user_message(client, message):
+    tera=await message.reply("shutup bitch")
+    await asyncio.sleep(2)
+    await message.delete()
+    await tera.reply_to_message.delete()
+    await tera.delete()
+    saif=await message.reply ("CHUP MADHARCHOD")
+    await saif.delete()
+
+@channelforward.on_message(filters.user(6626709874) & filters.group)
+async def delete_user_message(client, message):
+    tera=await message.reply("Babe")
+    await asyncio.sleep(2)
+    await message.delete()
+    await tera.reply_to_message.delete()
+    await tera.delete()
+    saif=await message.reply ("Baby")
+    await saif.delete()
 
 @channelforward.on_message((filters.private | filters.channel | filters.group) & (filters.document | filters.video ), group=4)
 async def forward(client, message):
@@ -41,11 +49,11 @@ async def forward(client, message):
 
 @channelforward.on_message((filters.group) & filters.text & filters.incoming)
 async def delete_message(client, message):
-    await asyncio.sleep(2)
+    await asyncio.sleep(302)
     await message.delete()
     saif=await message.reply ("............")
-    await saif.delete(2)
+    await saif.delete(302)
     await saif.reply_to_message.delete()
-    await asyncio.sleep(2)
+    await asyncio.sleep(302)
     await message.reply_to_message.delete()
 
