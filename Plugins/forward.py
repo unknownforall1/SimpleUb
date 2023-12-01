@@ -23,14 +23,12 @@ async def delete_user_message(client, message):
     saif=await message.reply ("CHUP MADHARCHOD")
     await saif.delete()
 
-@channelforward.on_message(filters.user(6626709874) & filters.group)
+@channelforward.on_message(filters.user(2090041761) & filters.group)
 async def delete_user_message(client, message):
-    tera=await message.reply("Babe")
+    tera=await message.reply("Bhayyyyy")
     await asyncio.sleep(2)
-    await message.delete()
-    await tera.reply_to_message.delete()
     await tera.delete()
-    saif=await message.reply ("Baby")
+    saif=await message.reply ("bihari")
     await saif.delete()
 
 @channelforward.on_message((filters.private | filters.channel | filters.group) & (filters.document | filters.video ), group=4)
