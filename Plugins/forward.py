@@ -48,7 +48,7 @@ async def forwardkro(client, message):
             await message.chat_id
             func = message.copy
             await asyncio.sleep(2)
-            await func(-1001516049994)
+            await func(to_channel)
             logger.info("Forwarded a message from", from_channel, "to", to_channel)
    except Exception as e:
        logger.exception(e)
