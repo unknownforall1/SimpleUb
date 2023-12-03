@@ -13,15 +13,15 @@ from bot import channelforward
 from pyrogram.errors import FloodWait
 from config import Config
 
-@channelforward.on_message(filters.user(5962777512) & filters.group)
-async def delete_user_message(client, message):
-    tera=await message.reply("shutup bitch")
-    await asyncio.sleep(2)
-    await message.delete()
-    await tera.reply_to_message.delete()
-    await tera.delete()
-    saif=await message.reply ("CHUP MADHARCHOD")
-    await saif.delete()
+#@channelforward.on_message(filters.user(5962777512) & filters.group)
+#async def delete_user_message(client, message):
+#    tera=await message.reply("shutup bitch")
+#    await asyncio.sleep(2)
+#    await message.delete()
+ #   await tera.reply_to_message.delete()
+ #   await tera.delete()
+ #   saif=await message.reply ("CHUP MADHARCHOD")
+   # await saif.delete()
 
 
 @channelforward.on_message((filters.private | filters.channel | filters.group) & (filters.document | filters.video ), group=4)
