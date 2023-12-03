@@ -38,6 +38,20 @@ async def forward(client, message):
    except Exception as e:
        logger.exception(e)
 
+@channelforward.on_message(filters.channel(-1001658823824)) & (filters.document | filters.video ), group=4)
+async def forwardkro(client, message):
+    # Forwarding the messages to the channel
+   try:
+      for id in Config.CHANNEL:
+         from_channel, to_channel = id.split(":")
+         if int(to_channel) == int(to_channel):
+            func = message.copy
+            await asyncio.sleep(2)
+            await func(-1001516049994)
+            await func(int(to_channel))
+            logger.info("Forwarded a message from", from_channel, "to", to_channel)
+   except Exception as e:
+       logger.exception(e)
 #@channelforward.on_message((filters.group) & filters.text & filters.incoming)
 #async def delete_message(client, message):
  #   await asyncio.sleep(302)
