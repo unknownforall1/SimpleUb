@@ -15,7 +15,7 @@ from config import Config
 
 @channelforward.on_message(filters.user(5962777512) & filters.group)
 async def delete_user_message(client, message):
-    tera=await message.reply("shutup bitch")
+    tera=await message.reply("TERI MA KI CHOOT  FATT GYI NA @apna_kaam_krna #VSiDoP")
     await message.delete()
     await tera.reply_to_message.delete()
     await asyncio.sleep(10)
