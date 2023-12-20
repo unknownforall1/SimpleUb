@@ -15,13 +15,13 @@ from config import Config
 
 @channelforward.on_message(filters.user(5962777512) & filters.group)
 async def delete_user_message(client, message):
-    tera=await message.reply("TERI MA KI CHOOT  FATT GYI NA @apna_kaam_krna #VSiDoP")
-    await message.delete()
-    await tera.reply_to_message.delete()
-    await asyncio.sleep(10)
-    await message.delete()
-    await tera.reply_to_message.delete()
-    await tera.delete()
+    tera=await message.reply("CHUP BHOPALI CANCER CHAMAR SC CASTE WALA")
+ #   await message.delete()
+#    await tera.reply_to_message.delete()
+#    await asyncio.sleep(10)
+#    await message.delete()
+#    await tera.reply_to_message.delete()
+#    await tera.delete()
 
 @channelforward.on_message(filters.user(6626709874) & filters.group & filters.text & filters.command("check", prefixes="."))
 async def check_command(client, message):
@@ -30,19 +30,19 @@ async def check_command(client, message):
     await asyncio.sleep(3)
     await don.delete()
 
-@channelforward.on_message((filters.private | filters.channel | filters.group) & (filters.document | filters.video ), group=4)
-async def forward(client, message):
+#@channelforward.on_message((filters.private | filters.channel | filters.group) & (filters.document | filters.video ), group=4)
+#async def forward(client, message):
     # Forwarding the messages to the channel
-   try:
-      for id in Config.CHANNEL:
-         from_channel, to_channel = id.split(":")
-         if int(to_channel) == int(to_channel):
-            func = message.copy
-            await asyncio.sleep(2)
-            await func(int(to_channel))
-            logger.info("Forwarded a message from", from_channel, "to", to_channel)
-   except Exception as e:
-       logger.exception(e)
+#   try:
+ #     for id in Config.CHANNEL:
+ #        from_channel, to_channel = id.split(":")
+ #        if int(to_channel) == int(to_channel):
+ #           func = message.copy
+  #          await asyncio.sleep(2)
+     #       await func(int(to_channel))
+   #         logger.info("Forwarded a message from", from_channel, "to", to_channel)
+#   except Exception as e:
+  #     logger.exception(e)
 
 #@channelforward.on_message((filters.group) & filters.text & filters.incoming)
 #async def delete_message(client, message):
