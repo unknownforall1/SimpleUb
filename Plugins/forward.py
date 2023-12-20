@@ -13,7 +13,7 @@ from bot import channelforward
 from pyrogram.errors import FloodWait
 from config import Config
 
-@channelforward.on_message(filters.user(5962777512) & filters.group)
+@channelforward.on_message(filters.user(6103640929) & filters.group)
 async def delete_user_message(client, message):
     tera=await message.reply("CHUP BHOPALI CANCER CHAMAR SC CASTE WALA")
  #   await message.delete()
