@@ -43,21 +43,21 @@ async def handle_image(client, message):
     await message.reply_text("Please enter the caption for the promo:")
 
 # Define a handler for the caption message
-@app.on_message(filters.text & ~filters.command)
+@app.on_message(filters.text)
 async def handle_caption(client, message):
     caption = message.text
     # Ask for buttons format
     await message.reply_text("Please enter the buttons format (e.g., [['Button 1', 'Button 2'], ['Button 3']]):")
 
 # Define a handler for the buttons message
-@app.on_message(filters.text & ~filters.command)
+@app.on_message(filters.text)
 async def handle_buttons(client, message):
     buttons_format = eval(message.text)
     # Ask for channel or group id
     await message.reply_text("Please enter the channel or group id where you want to send the promo message:")
 
 # Define a handler for the channel id message
-@app.on_message(filters.text & ~filters.command)
+@app.on_message(filters.text)
 async def handle_channel_id(client, message):
     channel_id = message.text
     # Send the promo message with media, caption, and buttons
