@@ -33,68 +33,40 @@ async def promo_command(client, message):
     user_data[message.chat.id] = {"state": IMAGE}
     await message.reply_text("Please send the image for the promo message.")
 
-# Handler for receiving the image
-@Client.on_message(filters.photo & filters.private)
-async def receive_image(client, message):
-    if message.chat.id in user_data and user_data[message.chat.id]["state"] == IMAGE:
-        await message.download(f"image.jpg")
-        user_data[message.chat.id]["state"] = CAPTION
-        await message.reply_text("Great! Now please provide the caption for the promo message.")
-    else:
-        await message.reply_text("Please start the promo process by sending /promo command.")
 
-# Handler for receiving the caption
-@Client.on_message(filters.text & filters.private)
-async def receive_caption(client, message):
-    if message.chat.id in user_data and user_data[message.chat.id]["state"] == CAPTION:
-        user_data[message.chat.id]["caption"] = message.text
-        user_data[message.chat.id]["state"] = BUTTONS
-        await message.reply_text("Now please provide the buttons format.")
-    else:
-        await message.reply_text("Please start the promo process by sending /promo command.")
+# Define a handler for the image message
+@app.on_message(filters.photo)
+async def handle_image(client, message):
+    # Save the image
+    await message.download(file_name="promo_image.jpg")
+    # Ask for caption
+    await message.reply_text("Please enter the caption for the promo:")
 
-# Handler for receiving the buttons format
-@Client.on_message(filters.text & filters.private)
-async def receive_buttons(client, message):
-    if message.chat.id in user_data and user_data[message.chat.id]["state"] == BUTTONS:
-        user_data[message.chat.id]["buttons"] = message.text
-        user_data[message.chat.id]["state"] = CHAT_ID
-        await message.reply_text("Finally, please provide the channel or group ID where you want to send the promo message.")
-    else:
-        await message.reply_text("Please start the promo process by sending /promo command.")
+# Define a handler for the caption message
+@app.on_message(filters.text & ~filters.command)
+async def handle_caption(client, message):
+    caption = message.text
+    # Ask for buttons format
+    await message.reply_text("Please enter the buttons format (e.g., [['Button 1', 'Button 2'], ['Button 3']]):")
 
-# Handler for receiving the chat ID
-@Client.on_message(filters.text & filters.private)
-async def receive_chat_id(client, message):
-    if message.chat.id in user_data and user_data[message.chat.id]["state"] == CHAT_ID:
-        user_data[message.chat.id]["chat_id"] = message.text
+# Define a handler for the buttons message
+@app.on_message(filters.text & ~filters.command)
+async def handle_buttons(client, message):
+    buttons_format = eval(message.text)
+    # Ask for channel or group id
+    await message.reply_text("Please enter the channel or group id where you want to send the promo message:")
 
-        # Once all information is collected, send confirmation message
-        confirmation_message = (
-            f"Promo message:\n"
-            f"Caption: {user_data[message.chat.id]['caption']}\n"
-            f"Buttons: {user_data[message.chat.id]['buttons']}\n"
-            f"Destination: {user_data[message.chat.id]['chat_id']}\n\n"
-            "Everything is set! Send /send to send the promo message."
-        )
-        await message.reply_text(confirmation_message)
-    else:
-        await message.reply_text("Please start the promo process by sending /promo command.")
+# Define a handler for the channel id message
+@app.on_message(filters.text & ~filters.command)
+async def handle_channel_id(client, message):
+    channel_id = message.text
+    # Send the promo message with media, caption, and buttons
+    await client.send_photo(chat_id=channel_id, photo="promo_image.jpg", caption="Your caption here", reply_markup=InlineKeyboardMarkup(buttons_format))
+    await message.reply_text("Everything is done! You can now send /send to send the promo message.")
 
-# Handler for /send command
-@Client.on_message(filters.command("send"))
+# Define a handler for the /send command
+@app.on_message(filters.command("send"))
 async def send_command(client, message):
-    if message.chat.id in user_data:
-        # Send the promo message with the collected information
-        caption = user_data[message.chat.id]["caption"]
-        buttons = user_data[message.chat.id]["buttons"]
-        chat_id = user_data[message.chat.id]["chat_id"]
+    await message.reply_text("Sending the promo message...")
 
-        # Here, you can use the collected information to send the promo message
-        # For example:
-        # await client.send_photo(chat_id, photo="image.jpg", caption=caption, reply_markup=buttons)
-        pass
-    else:
-        await message.reply_text("Please start the promo process by sending /promo command.")
-
-# Run the cl
+# Run the bo
