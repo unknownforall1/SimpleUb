@@ -2,7 +2,10 @@
 # Subscribe YouTube Channel For Amazing Bot @Tech_VJ
 # Ask Doubt on telegram @KingVJ01
 
+from pyrogram import Client
 import logging
+import uvloop
+from config import Config
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(lineno)d - %(module)s - %(levelname)s - %(message)s'
@@ -10,17 +13,14 @@ logging.basicConfig(
 logging.getLogger().setLevel(logging.INFO)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-import uvloop
 uvloop.install()
-from config import Config
-from pyrogram import Client 
 
 
 class channelforward(Client, Config):
     def __init__(self):
         super().__init__(
             name="CHANNELFORWARD",
-            session_string=self.session_string,
+            bot_token=self.BOT_TOKEN,
             api_id=self.API_ID,
             api_hash=self.API_HASH,
             workers=20,
@@ -37,5 +37,5 @@ class channelforward(Client, Config):
         print("Session stopped. Bye!!")
 
 
-if __name__ == "__main__" :
+if __name__ == "__main__":
     channelforward().run()
