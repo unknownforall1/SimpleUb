@@ -11,5 +11,7 @@ pyrogram
 tgcrypto
 requests
 Jinja2==3.0.3
+telegraph
+pyfiglet
 werkzeug==2.0.2
 itsdangerous==2.0.1
