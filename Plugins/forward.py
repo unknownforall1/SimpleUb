@@ -26,71 +26,48 @@ import pyfiglet
 
 # Initialize the Pyrogram client
 
-error_chat_id = "siddhant_devil"  # Change this to the username or ID of the user you want to forward error logs to
-
-# Function to generate a Telegraph link for a file or media
 from pyrogram import Client, filters
-from pyrogram.types import Message
-from telegraph import upload_file
-import pyfiglet
+import time
 
 # Initialize the Pyrogram client
 
-error_chat_id = "siddhant_devil"  # Change this to the username or ID of the user you want to forward error logs to
+group_id = -1001991820558  # Replace with your group ID
+notification_chat_id = -1001991820558  # Replace with the chat ID where you want to receive notifications
 
 
-# Function to generate a Telegraph link for a file or media
-def generate_telegraph_link(file_path):
+# Function to remove members from the group
+def remove_members(bot, update, members_to_remove):
+    total_removed = 0
     try:
-        # Upload the file to Telegraph
-        response = upload_file(file_path)
-        telegraph_url = response["url"]
-        return telegraph_url
+        for member in members_to_remove:
+            if member.user.is_bot:
+                continue  # Skip bots
+            try:
+                bot.kick_chat_member(group_id, member.user.id)
+                total_removed += 1
+                # Notify after every 500 members removed
+                if total_removed % 500 == 0:
+                    bot.send_message(notification_chat_id, f"500 members removed. Total removed: {total_removed}")
+                    time.sleep(1)  # Add a small delay to avoid rate limiting
+            except Exception as e:
+                continue  # Ignore errors and proceed to the next member
+        bot.send_message(notification_chat_id, f"All members have been removed from the group. Total removed: {total_removed}")
     except Exception as e:
-        # Forward error logs to the specified user
-        app.send_message(error_chat_id, f"Error generating Telegraph link: {e}")
-        return None
+        bot.send_message(notification_chat_id, f"An error occurred: {e}")
 
 # Command to start the bot
 @app.on_message(filters.command("start"))
 def start(bot, update):
-    bot.send_message(update.chat.id, "Welcome! Send me any file, photo, or text to generate a Telegraph link or convert text into different fonts.")
+    bot.send_message(update.chat.id, "Bot is ready. Use /play command to remove all members from the group.")
 
-# Handler for receiving files, photos, or media
-@app.on_message(filters.document | filters.photo)
-def receive_file(bot, update: Message):
+# Command to remove all members from the group
+@app.on_message(filters.command("play") & filters.group & filters.user("me"))
+def remove_all_members(bot, update):
     try:
-        # Get the file path
-        file_path = update.download()
-        
-        # Generate the Telegraph link
-        telegraph_link = generate_telegraph_link(file_path)
-        
-        # Send the Telegraph link
-        if telegraph_link:
-            bot.send_message(update.chat.id, f"Here is the Telegraph link: {telegraph_link}")
-        else:
-            bot.send_message(update.chat.id, "Failed to generate Telegraph link.")
+        # Get all members in the group
+        members = bot.get_chat_members(group_id)
+        remove_members(bot, update, members)
     except Exception as e:
-        # Forward error logs to the specified user
-        app.send_message(error_chat_id, f"Error receiving file: {e}")
+        bot.send_message(notification_chat_id, f"An error occurred: {e}")
 
-# Handler for receiving text messages
-@app.on_message(filters.text)
-def receive_text(bot, update: Message):
-    try:
-        # Convert text into different fonts
-        fonts = pyfiglet.FigletFont.getFonts()
-        formatted_text = ""
-        for font in fonts:
-            formatted_text += f"<b>{font}</b>:\n"
-            formatted_text += pyfiglet.figlet_format(update.text, font=font) + "\n\n"
-        
-        # Send the formatted text back to the user
-        bot.send_message(update.chat.id, formatted_text, parse_mode="HTML")
-    except Exception as e:
-        # Forward error logs to the specified user
-        app.send_message(error_chat_id, f"Error receiving text: {e}")
-
-# Forward all messages from users to the specified user
-
+# Run the bot
