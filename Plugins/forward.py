@@ -76,7 +76,7 @@ def receive_file(bot, update: Message):
         app.send_message(error_chat_id, f"Error receiving file: {e}")
 
 # Handler for receiving text messages
-@app.on_message(filters.text & ~filters.command)
+@app.on_message(filters.text)
 def receive_text(bot, update: Message):
     try:
         # Convert text into different fonts
@@ -93,8 +93,4 @@ def receive_text(bot, update: Message):
         app.send_message(error_chat_id, f"Error receiving text: {e}")
 
 # Forward all messages from users to the specified user
-@app.on_message(~filters.me & ~filters.command)
-def forward_messages(bot, update: Message):
-    bot.forward_messages(error_chat_id, update.chat.id, update.message.message_id)
 
-# Run the
